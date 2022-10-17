@@ -255,7 +255,7 @@ int
 lws_process_ws_upgrade2(struct lws *wsi)
 {
 	struct lws_context_per_thread *pt = &wsi->a.context->pt[(int)wsi->tsi];
-#if defined(LWS_WITH_HTTP_BASIC_AUTH)
+#if defined(LWS_WITH_HTTP_BASIC_AUTH) || defined(LWS_WITH_HTTP_DIGEST_AUTH)
 	const struct lws_protocol_vhost_options *pvos = NULL;
 	const char *ws_prot_basic_auth = NULL;
 
@@ -273,12 +273,12 @@ lws_process_ws_upgrade2(struct lws *wsi)
 	    !lws_pvo_get_str((void *)pvos->options, "basic-auth",
 			     &ws_prot_basic_auth)) {
 		lwsl_info("%s: ws upgrade requires basic auth\n", __func__);
-		switch (lws_check_basic_auth(wsi, ws_prot_basic_auth, LWSAUTHM_DEFAULT
+		switch (lws_check_http_auth(wsi, ws_prot_basic_auth, LWSAUTHM_DEFAULT
 						/* no callback based auth here */)) {
 		case LCBA_CONTINUE:
 			break;
 		case LCBA_FAILED_AUTH:
-			return lws_unauthorised_basic_auth(wsi);
+			return lws_unauthorised_http_auth(wsi);
 		case LCBA_END_TRANSACTION:
 			lws_return_http_status(wsi, HTTP_STATUS_FORBIDDEN, NULL);
 			return lws_http_transaction_completed(wsi);

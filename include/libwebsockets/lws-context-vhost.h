@@ -948,6 +948,8 @@ struct lws_context_creation_info {
 	 * default, it's 500us.
 	 */
 #endif
+	const char *http_auth_realm; /**< VHOST: string returned with http
+	 * auth and shown to the user in the credentials prompt */
 
 	/* Add new things just above here ---^
 	 * This is part of the ABI, don't needlessly break compatibility

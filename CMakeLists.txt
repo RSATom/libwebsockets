@@ -158,7 +158,6 @@ option(LWS_WITH_FTS "Full Text Search support" OFF)
 option(LWS_WITH_SYS_ASYNC_DNS "Nonblocking internal IPv4 + IPv6 DNS resolver" OFF)
 option(LWS_WITH_SYS_NTPCLIENT "Build in tiny ntpclient good for tls date validation and run via lws_system" OFF)
 option(LWS_WITH_SYS_DHCP_CLIENT "Build in tiny DHCP client" OFF)
-option(LWS_WITH_HTTP_BASIC_AUTH "Support Basic Auth" ON)
 option(LWS_WITH_HTTP_UNCOMMON_HEADERS "Include less common http header support" ON)
 option(LWS_WITH_SYS_STATE "lws_system state support" ON)
 option(LWS_WITH_SYS_SMD "Lws System Message Distribution" ON)
@@ -263,6 +262,16 @@ option(LWS_WITHOUT_TEST_CLIENT "Don't build the client test application" OFF)
 # Extensions (permessage-deflate)
 #
 option(LWS_WITHOUT_EXTENSIONS "Don't compile with extensions" ON)
+#
+# Auth
+#
+option(LWS_WITH_HTTP_BASIC_AUTH "Support Basic Auth" OFF)
+if (LWS_WITH_SSL)
+option(LWS_WITH_HTTP_DIGEST_AUTH "HTTP Digest Auth support (more secure)" ON)
+endif()
+if (LWS_WITH_HTTP_BASIC_AUTH AND LWS_WITH_HTTP_DIGEST_AUTH)
+	message(FATAL_ERROR "Pick one of LWS_WITH_HTTP_BASIC_AUTH or DIGEST")
+endif()
 #
 # Helpers + misc
 #

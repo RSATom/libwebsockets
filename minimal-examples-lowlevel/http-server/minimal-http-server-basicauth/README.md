@@ -3,6 +3,10 @@
 This demonstrates how to protect a mount using a password
 file outside of the mount itself.
 
+Although it's called 'basic auth' it supports both basic auth and
+RFC7616 MD5 digest auth depending on `LWS_WITH_HTTP_BASIC_AUTH` or
+`LWS_WITH_HTTP_DIGEST_AUTH`.
+
 The demo has two mounts, a normal one at / and one protected
 by basic auth at /secret.
 

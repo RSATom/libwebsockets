@@ -389,6 +389,23 @@ LWS_VISIBLE LWS_EXTERN int
 lws_hex_to_byte_array(const char *h, uint8_t *dest, int max);
 
 /**
+ * lws_byte_array_to_hex(): convert byte array into hex chars with NUL term
+ *
+ * \param src: incoming byte array
+ * \param len: length in bytes of src
+ * \param dest: result char array
+ * \param dlen: length in bytes of dest
+ *
+ * dlen must be >= (2 * len) + 1 or the function will fail returning -1.
+ *
+ * Otherwise the byte array is represented as unspaced hex chars into dest and
+ * a NUL is appended on the end.  The function returns the length in dest
+ * excluding the NUL.
+ */
+LWS_VISIBLE LWS_EXTERN int
+lws_byte_array_to_hex(const uint8_t *src, size_t len, char *dest, size_t dlen);
+
+/**
  * lws_hex_from_byte_array(): render byte array as hex char string
  *
  * \param src: incoming binary source array

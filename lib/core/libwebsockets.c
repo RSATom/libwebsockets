@@ -115,6 +115,8 @@ lws_vbi_decode(const void *buf, uint64_t *value, size_t len)
 	return 0;
 }
 
+static const char *hex = "0123456789ABCDEF";
+
 signed char char_to_hex(const char c)
 {
 	if (c >= '0' && c <= '9')
@@ -158,6 +160,25 @@ int
 lws_hex_to_byte_array(const char *h, uint8_t *dest, int max)
 {
 	return lws_hex_len_to_byte_array(h, strlen(h), dest, max);
+}
+
+int
+lws_byte_array_to_hex(const uint8_t *src, size_t len, char *dest, size_t dlen)
+{
+	char *odest = dest;
+
+	if (dlen < (2 * len) + 1)
+		return -1;
+
+	while (len--) {
+		*dest++ = hex[(*src) >> 4];
+		*dest++ = hex[(*src) & 15];
+		src++;
+	}
+
+	*dest = '\0';
+
+	return (int)(dest - odest);
 }
 
 static char *hexch = "0123456789abcdef";
@@ -531,8 +552,6 @@ lws_json_simple_strcmp(const char *buf, size_t len, const char *name,
 
 	return strncmp(hit, comp, al);
 }
-
-static const char *hex = "0123456789ABCDEF";
 
 const char *
 lws_sql_purify(char *escaped, const char *string, size_t len)

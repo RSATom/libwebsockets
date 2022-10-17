@@ -182,6 +182,8 @@
 #cmakedefine LWS_WITH_HTTP_PROXY
 #cmakedefine LWS_WITH_HTTP_STREAM_COMPRESSION
 #cmakedefine LWS_WITH_HTTP_UNCOMMON_HEADERS
+#cmakedefine LWS_WITH_HTTP_BASIC_AUTH
+#cmakedefine LWS_WITH_HTTP_DIGEST_AUTH
 #cmakedefine LWS_WITH_IPV6
 #cmakedefine LWS_WITH_JOSE
 #cmakedefine LWS_WITH_CBOR
